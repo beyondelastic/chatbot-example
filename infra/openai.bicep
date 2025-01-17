@@ -18,7 +18,7 @@ resource gpt3_5 'Microsoft.CognitiveServices/accounts/deployments@2024-04-01-pre
   name: '${openAIAccountName}GPT35'
   sku: {
     name: 'Standard'
-    capacity: 120
+    capacity: 30
   }
   properties: {
     model: {
@@ -27,7 +27,7 @@ resource gpt3_5 'Microsoft.CognitiveServices/accounts/deployments@2024-04-01-pre
       version: '0301'
     }
     versionUpgradeOption: 'OnceNewDefaultVersionAvailable'
-    currentCapacity: 120
+    currentCapacity: 30
     raiPolicyName: 'Microsoft.Default'
   }
 }
