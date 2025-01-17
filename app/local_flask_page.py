@@ -1,16 +1,21 @@
 # create a webserver using the flask framework
 # import all modules needed
+
 import os
 import requests
 from flask import Flask, request, jsonify
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # create the flask object
 app = Flask(__name__)
 
 # Load Azure OpenAI configuration from environment variables
-AZURE_OPENAI_ENDPOINT = ''
-AZURE_OPENAI_API_KEY = ''
-AZURE_OPENAI_DEPLOYMENT_NAME = 'gpt-35-turbo'
+AZURE_OPENAI_API_KEY = os.getenv("API_KEY")
+AZURE_OPENAI_ENDPOINT = os.getenv("API_Endpoint")
+AZURE_OPENAI_DEPLOYMENT_NAME = os.getenv("Deployment_Name")
 
 @app.route("/")
 def index():
@@ -58,10 +63,10 @@ def generate_bot_reply(message):
     }
     data = {
         "messages": [
-            {"role": "system", "content": "You are an AI assistant for an online basketball equipment shop. Provide helpful information about basketball products and assist with any inquiries related to basketball equipment."},
+            {"role": "system", "content": "You are an AI assistant for an online basketball equipment shop. Provide helpful information about basketball products and assist with any inquiries related to basketball equipment. Keep your answers short and precise."},
             {"role": "user", "content": message}
         ],
-        "max_tokens": 50,
+        "max_tokens": 100,
     }
     response = requests.post(
         f"{AZURE_OPENAI_ENDPOINT}/openai/deployments/{AZURE_OPENAI_DEPLOYMENT_NAME}/chat/completions?api-version=2024-08-01-preview",
