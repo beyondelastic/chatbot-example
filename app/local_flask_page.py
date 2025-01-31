@@ -5,6 +5,7 @@ import os
 import requests
 from flask import Flask, request, jsonify
 from dotenv import load_dotenv
+from search_internet import search_internet # Import the necessary functions
 
 # Load environment variables from .env file
 load_dotenv()
@@ -57,13 +58,18 @@ def chat():
     return jsonify({"reply": bot_reply})
 
 def generate_bot_reply(message):
+    # Get Bing search results
+    search_results = search_internet(message)
+    search_context = search_results["content"]
+
     headers = {
         "Content-Type": "application/json",
         "api-key": AZURE_OPENAI_API_KEY,
     }
     data = {
         "messages": [
-            {"role": "system", "content": "You are an AI assistant for an online basketball equipment shop. Provide helpful information about basketball products and assist with any inquiries related to basketball equipment. Keep your answers short and precise."},
+            {"role": "system", "content": "You are an AI chatbot for all information around the Basketball Euroleague. Provide up2date answers to stats, results and news. Keep your answers short and precise."},
+            {"role": "system", "content": search_context},  # Add search context
             {"role": "user", "content": message}
         ],
         "max_tokens": 100,
@@ -88,5 +94,4 @@ def generate_bot_reply(message):
 #run the flask object
 if __name__ == "__main__":
     app.run(debug=True)
-
 

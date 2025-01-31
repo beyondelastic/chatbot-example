@@ -1,6 +1,6 @@
 targetScope = 'subscription'
 
-param resourceLocation string = 'westeurope'
+param resourceLocation string = 'switzerlandnorth'
 
 resource rg 'Microsoft.Resources/resourceGroups@2022-09-01' = {
   name: 'rg-aullah-chatbot'

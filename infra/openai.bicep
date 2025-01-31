@@ -1,5 +1,5 @@
 param openAIAccountName 'aullah-openai'
-param location 'westeurope'
+param location string
 
 resource openAIAccount 'Microsoft.CognitiveServices/accounts@2024-04-01-preview' = {
   name: openAIAccountName
@@ -24,7 +24,7 @@ resource gpt3_5 'Microsoft.CognitiveServices/accounts/deployments@2024-04-01-pre
     model: {
       format: 'OpenAI'
       name: 'gpt-35-turbo'
-      version: '0301'
+      version: '0125'
     }
     versionUpgradeOption: 'OnceNewDefaultVersionAvailable'
     currentCapacity: 30
